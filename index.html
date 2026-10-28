@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#180f25">
+<title>A Little Question for Sipha ❤️</title>
+<style>
+  *{box-sizing:border-box}
+  body{
+    margin:0;min-height:100vh;display:grid;place-items:center;padding:22px;
+    font-family:system-ui,-apple-system,Segoe UI,sans-serif;color:#fff1f5;
+    background:radial-gradient(circle at 15% 20%,#60304f 0,transparent 36%),
+               radial-gradient(circle at 85% 80%,#35245f 0,transparent 38%),#130f20;
+    overflow-x:hidden
+  }
+  .heart{position:fixed;bottom:-30px;opacity:.15;pointer-events:none;animation:float 12s linear infinite}
+  .heart:nth-child(2){left:12%;animation-delay:2s;font-size:22px}
+  .heart:nth-child(3){left:80%;animation-delay:5s;font-size:28px}
+  .heart:nth-child(4){left:55%;animation-delay:8s;font-size:18px}
+  @keyframes float{from{transform:translateY(0) rotate(0)}to{transform:translateY(-115vh) rotate(35deg)}}
+  .card{
+    width:min(100%,520px);padding:clamp(25px,6vw,42px);text-align:center;
+    border:1px solid #ffffff24;border-radius:28px;
+    background:#ffffff0c;backdrop-filter:blur(12px);
+    box-shadow:0 22px 80px #0005;animation:appear .8s ease both
+  }
+  @keyframes appear{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .symbol{font-size:48px;margin-bottom:8px;animation:pulse 2s ease-in-out infinite}
+  @keyframes pulse{50%{transform:scale(1.1)}}
+  .eyebrow{color:#f4a8c2;letter-spacing:3px;text-transform:uppercase;font-size:11px;font-weight:700}
+  h1{font-family:Georgia,serif;font-weight:500;font-size:clamp(29px,7vw,42px);line-height:1.15;margin:12px 0 18px}
+  p{line-height:1.75;color:#f4e7ee;font-size:15px}
+  .question{font-family:Georgia,serif;font-size:22px;color:#ffd5e3;margin:25px 0 18px}
+  .choices{display:grid;gap:10px;margin-top:18px}
+  button{
+    border:1px solid #ffffff30;border-radius:14px;padding:14px 16px;
+    color:#fff;background:#ffffff0d;font:inherit;cursor:pointer;transition:.2s
+  }
+  button:hover,button:focus-visible{transform:translateY(-2px);background:#ffffff1b;outline:2px solid #f4a8c2}
+  .primary{background:#c04f7b;border-color:#c04f7b;font-weight:650}
+  .primary:hover{background:#d15c89}
+  .reply{display:none;margin-top:20px;padding:17px;border-radius:16px;background:#0002;border:1px solid #ffffff20}
+  .reply.show{display:block;animation:appear .35s ease both}
+  .reply p{margin:0 0 14px}
+  .small{font-size:12px;color:#cbb9c8;margin-top:22px}
+  .footer{font-family:Georgia,serif;color:#f4a8c2;font-style:italic;margin-top:18px}
+</style>
+</head>
+<body>
+<div class="heart" style="left:30%;font-size:25px">♥</div>
+<div class="heart">♥</div><div class="heart">♥</div><div class="heart">♥</div>
+<main class="card">
+  <div class="symbol">💌</div>
+  <div class="eyebrow">A message for Sipha</div>
+  <h1>Can I ask you something?</h1>
+  <p>Hey Sipha ❤️</p>
+  <p>
+    I've noticed that we haven't been talking like we used to, and honestly,
+    I've been wondering if something has changed. I don't want to assume
+    anything or make you feel pressured. I just want to understand.
+  </p>
+  <div class="question">“Is there a reason you don't talk to me much anymore?”</div>
+  <p>If something is wrong, or if you need space, you can tell me honestly.
+     I'll respect how you feel.</p>
+
+  <div class="choices">
+    <button class="primary" onclick="showReply('busy')">I've been busy lately</button>
+    <button onclick="showReply('change')">Something has changed</button>
+    <button onclick="showReply('space')">I need some space</button>
+    <button onclick="showReply('talk')">I'd rather explain in my own words</button>
+  </div>
+
+  <section class="reply" id="reply" aria-live="polite">
+    <p id="replyText"></p>
+    <button class="primary" onclick="copyMessage()">Copy a kind reply</button>
+    <button onclick="closeReply()">Close</button>
+  </section>
+  <div class="footer">No pressure, just honesty. ❤️</div>
+  <div class="small">Made with care · You deserve honesty, and she deserves space to answer freely.</div>
+</main>
+<script>
+const replies = {
+  busy: "I understand. Thank you for telling me. I hope you're doing okay, and we can talk whenever you have time.",
+  change: "Thank you for being honest with me. I may feel sad, but I'd rather understand how you really feel than make assumptions.",
+  space: "I understand, and I'll respect your space. If you ever want to talk, you can reach out when you're ready.",
+  talk: "Of course. Take your time and tell me honestly. I'll listen without judging you."
+};
+let currentReply = "";
+function showReply(type){
+  currentReply = replies[type];
+  document.getElementById("replyText").textContent = currentReply;
+  document.getElementById("reply").classList.add("show");
+  document.getElementById("reply").scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function closeReply(){document.getElementById("reply").classList.remove("show")}
+async function copyMessage(){
+  try{
+    await navigator.clipboard.writeText(currentReply);
+    alert("Reply copied!");
+  }catch(e){
+    const box=document.createElement("textarea");
+    box.value=currentReply;document.body.appendChild(box);box.select();
+    document.execCommand("copy");box.remove();alert("Reply copied!");
+  }
+}
+</script>
+</body>
+</html>
